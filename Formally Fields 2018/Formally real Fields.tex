@@ -1,0 +1,285 @@
+\documentclass{beamer}
+%\usepackage[all,arc,curve,frame,color]{xy}
+%\usepackage{tkz-graph}
+\usepackage{mathtools}
+\usepackage{ragged2e,etoolbox}
+
+
+\newenvironment{nstabbing}
+  {\setlength{\topsep}{0pt}%
+   \setlength{\partopsep}{0pt}%
+   \tabbing}
+  {\endtabbing}
+
+\def\jump{ \quad \\ \vspace{0.5cm} \pause}
+\newcommand{\nc}{\newcommand}
+\nc{\pid}{\mathfrak{p} }
+\nc{\dpid}{\delta_{\mathfrak{p}}}
+
+\def\AA{{\mathbb A}}
+\def\CC{{\mathbb C}}
+\def\EE{{\mathcal E}}
+\def\FF{{\mathcal F}}
+\def\GG{{\mathcal G}}
+\def\HH{{\mathcal H}}
+\def\MM{{\mathcal M}}
+\def\NN{{\mathbb N}}
+\def\PP{{\mathbb P}}
+\def\QQ{{\mathbb Q}}
+\def\RR{{\mathbb R}}
+\def\ZZ{{\mathbb Z}}
+\def\aa{{\mathbf a}}
+\def\bb{{\mathbf b}}
+\def\del{\partial}
+\def\kk{\Bbbk}
+\def\mm{{\mathfrak m}}
+\def\nn{{\mathfrak n}}
+\def\pp{{\mathfrak p}}
+\def\qq{{\mathfrak q}}
+\def\rr{{\mathbf r}}
+\def\uu{{\mathbf u}}
+\def\vv{{\mathbf v}}
+\def\ww{{\mathbf w}}
+\def\xx{{\mathbf x}}
+\def\yy{{\mathbf y}}
+\def\zz{{\mathbf z}}
+\newcommand{\PGL}{\textrm{PGL}}
+\newcommand{\res}{\textrm{Res}}
+
+
+\DeclareMathOperator{\Tail}{Tail}
+\DeclareMathOperator{\Per}{Per}
+\DeclareMathOperator{\PrePer}{PrePer}
+
+\makeatletter
+\def\th@mystyle{%
+    \normalfont % body font
+    \setbeamercolor{block title example}{bg=orange,fg=white}
+    \setbeamercolor{block body example}{bg=orange!20,fg=black}
+    \def\inserttheoremblockenv{exampleblock}
+  }
+\makeatother
+
+\makeatletter
+\def\th@thmstyle{%
+    \normalfont % body font
+    \setbeamercolor{block title example}{bg=blue,fg=white}
+    \setbeamercolor{block body example}{bg=blue!20,fg=black}
+    \def\inserttheoremblockenv{exampleblock}
+  }
+\makeatother
+
+\definecolor{darkgreen}{RGB}{77,153,0}
+\makeatletter
+\def\th@qstnstyle{%
+    \normalfont % body font
+    \setbeamercolor{block title example}{bg=darkgreen,fg=white}
+    \setbeamercolor{block body example}{bg=green!20,fg=black}
+    \def\inserttheoremblockenv{exampleblock}
+  }
+\makeatother
+
+
+\theoremstyle{thmstyle}
+\newtheorem*{mythm}{Theorem}
+\newtheorem*{mydef}{Definition}
+\newtheorem*{myproof}{Proof}
+
+\theoremstyle{mystyle}
+\newtheorem*{remark}{Remark}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{myexample}{Example}
+\newtheorem*{mycor}{Corollary}
+\newtheorem*{mylemma}{Lemma}
+
+\theoremstyle{qstnstyle}
+\newtheorem*{question}{Question}
+
+\usepackage{remreset}% tiny package containing just the \@removefromreset command
+\makeatletter
+\@removefromreset{subsection}{section}
+\makeatother
+\setcounter{subsection}{1}
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}%
+  }%
+}
+
+\mode<presentation>{\usetheme{CambridgeUS}\usecolortheme{dolphin}} 
+%\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+
+
+\title[Formally Real Fields.]{Formally Real Fields}
+%\subtitle{long subtitle}
+\author[Sebastian Troncoso]{Sebastian Troncoso}
+\institute[BSC]{Birmingham-Southern College}
+%\titlegraphic{\includegraphics[height=1.5cm]{../images/normale_pisa.png}}
+\date[ \today]{ \today \\ \vspace{1cm} }
+
+
+%\AtBeginSection[]{} % for optional outline or other recurrent slide
+\AtBeginSection{\frame{\sectionpage}}
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Fields}
+First, let's recall the definition of a field. \pause
+\begin{mydef}
+A \textbf{field} $F$ is a set, along with two operations defined on the set: an addition and a multiplication such that $(F,+)$ and $(F^{*},\cdot)$ are abelian groups and distributivity law holds in $F$. 
+\end{mydef}
+
+\pause
+
+Classical examples are: 
+\begin{itemize}
+\item  $\QQ$ 
+
+\item $\RR$ 
+
+\item $\CC$
+\pause
+
+\item $\QQ(\sqrt{2})=\{x\in \RR \mid x=a+b\sqrt{2} \quad a,b\in \QQ \}$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Definition}
+Informally, a formally real field (also called ordered field) is a field with a linear order such that the operations of the fields are preserved \emph{i.e.}
+$$x\leq y \Longrightarrow x+z\leq y+z $$
+$$x\leq y \mbox{ and } 0\leq z \Longrightarrow xz\leq yz.$$
+
+\pause
+\begin{mydef}
+Let $F$ be a field. An \textbf{ordering} $\leq$ of $F$ is a binary relation satisfying
+\begin{enumerate}
+\item $a\leq a$
+\item $a\leq b, b\leq c \Longrightarrow a\leq c$
+\item $a\leq b, b\leq a \Longrightarrow a=b$
+\item $a\leq b$ or $b\leq a$
+\item $a\leq b \Longrightarrow a+c \leq b+c$
+\item $0\leq a, 0\leq b \Longrightarrow 0\leq ab$
+\end{enumerate}
+\end{mydef}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Example}
+\begin{myexample}
+$\QQ$ and $\RR$ are ordered fields with their usual orderings. 
+\end{myexample}
+
+\jump
+
+\begin{myexample}
+Any field $F$ such that $\QQ \subset F \subset \RR$ with the usual ordering is a ordered field.\jump For instance, $\QQ(\sqrt{2})$ 
+\end{myexample}
+
+
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Positive Numbers}
+Let $F$ be a ordered field and consider the set of positive numbers, $P=\{a\in F \mid 0 \leq a \}$ then $P$ satisfies the following axioms
+\jump
+\begin{enumerate}
+\item $P+P\subset P$
+\item $P \cdot P \subset P $
+\item $P \cap -P = \{0 \} $
+\item $P \cup -P=F$
+\end{enumerate}
+where $-P=\{-a\in F \mid a\in P \}=\{b\in F \mid 0 \geq b \}$.
+
+\jump
+If $a\geq 0 $ then \pause  
+$$a+(-a) \geq 0+(-a)$$
+$$0\geq -a $$
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Positive Cone}
+
+\begin{mydef}
+Let $F$ be a field and $P \subset F$. We say that $P$ is a \textbf{positive cone} if such that $P$ satisfies the following axioms
+\begin{enumerate}
+\item $P+P\subset P$
+\item $P \cdot P \subset P $
+\item $P \cap -P = \{0 \} $
+\item $P \cup -P=F$
+\end{enumerate}
+where $-P=\{-a\in F \mid a\in P \}$. 
+\end{mydef}
+
+\pause
+On the previous slide, we saw that given an order we can naturally construct a positive cone given by the positive numbers. 
+\jump 
+Conversely, if $P$ is a positive cone then 
+$$a \leq b \iff b-a \in P $$
+defines an ordering on $F$ such that $P$ is its positive cone. 
+
+\jump 
+Hence, the concepts of positive cones and ordering of a field are equivalent.
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Lemma: Squares are positive}
+\begin{mylemma}
+Let $F$ be a ordered field. Then 
+\begin{enumerate}
+\item $0 \leq a \Longrightarrow -a \leq 0 $ for every $a\in F$. 
+
+\item $0 \leq 1 $  and $-1 \leq 0 $.
+
+\item $0\leq a^2$ for every $a\in F$.
+\end{enumerate}
+\end{mylemma}
+\pause
+\begin{myproof}
+\begin{enumerate}
+\item DONE.
+\pause \item If $1 \leq 0$ then $0 \leq -1$. Hence $0 \leq (-1)^2=1$ which is a contradiction since the only element which is positive and negative at the same time is 0.
+\pause \item If $0\leq a$ then $0\leq a^2$ by definition of order. If $a \leq 0$ then $0\leq -a$. Hence, $0\leq (-a)^2=a^2$ by definition of order.
+\end{enumerate}
+
+\end{myproof}
+\end{frame}
+
+\begin{frame}[t]
+\frametitle{Nonexample}
+\begin{myexample}
+$\CC$ is \textbf{NOT} an ordered field because $i^2=-1$.
+\end{myexample}
+\jump
+\begin{myexample}
+From a previous talk we know that $\mathbb{Z}_p$ is a field when $p$ is a prime number. $\mathbb{Z}_p$ is \textbf{NOT} an ordered field because 
+\begin{equation*}
+\begin{split}
+p-1 & = 1+1+\ldots+1 \geq 0 \\
+& = -1 \leq 0
+\end{split}
+\end{equation*}
+\end{myexample}
+
+\end{frame}
+
+
+
+\begin{frame}
+\begin{center}
+{\Huge{THANK YOU}}
+\end{center}
+
+
+\end{frame}
+
+
+\end{document}

@@ -1,0 +1,37 @@
+P.<x,y> = ProjectiveSpace(QQ,1)
+H = End(P)
+f = H([x^2-y^2,y^2])
+f.rational_preperiodic_graph()
+
+
+
+
+P.<x,y> = ProjectiveSpace(QQ,1)
+H = End(P)
+aux=0
+order=10 
+for i in range(order):
+    for j in range(order):
+        f = H([x^2-(i/(j+1))*y^2,y^2])
+        if len(f.rational_preperiodic_points()) > 5:
+            print "Your conjecture is false at ("+str(i)+","+str(j+1)+")"
+            aux=1
+
+if aux==0:
+    print "Your conjecture holds up to "+str(order)
+
+      
+
+P.<x,y> = ProjectiveSpace(QQ,1)
+H = End(P)
+aux=0
+order=10 
+for i in range(order):
+    for j in range(order):
+        f = H([x^2-(i/(j+1))*y^2,y^2])
+        if len(f.rational_preperiodic_points()) > 8:
+            print "Your conjecture is false at ("+str(i)+","+str(j+1)+")"
+            aux=1
+
+if aux==0:
+    print "Your conjecture holds up to "+str(order)
